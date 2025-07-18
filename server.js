@@ -10,11 +10,21 @@ import authMiddleware from './middleware/auth.js';
 import id_generator from './utils/id_generator.js' // for generating unique ids
 import logger from './utils/logger.js';
 const { verify } = jwt;
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+// ✅ Dynamically reflect origin
+app.use(cors({
+  origin: (origin, callback) => {
+    callback(null, origin); // reflect the request origin
+  },
+  credentials: true
+}));
+
 
 const generator= new id_generator() // for generating different unique random ids
 
